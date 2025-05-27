@@ -651,10 +651,8 @@ require('lazy').setup({
             },
           },
         },
-        jedi_language_server = {},
-        -- pyright = {},
-        flake8 = {},
-        black = {},
+        basedpyright = {},
+        ruff = {},
         -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
