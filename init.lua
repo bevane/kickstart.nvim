@@ -264,6 +264,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  { 'wakatime/vim-wakatime', lazy = false }, -- Time tracker
   'sindrets/diffview.nvim',
   'tpope/vim-fugitive',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
@@ -694,6 +695,16 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         -- clangd = {},
+        jsonls = {
+          settings = {
+            json = {
+              format = {
+                enable = true,
+              },
+              validate = { enable = true },
+            },
+          },
+        },
         gopls = {
           settings = {
             gopls = {
@@ -814,6 +825,7 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
