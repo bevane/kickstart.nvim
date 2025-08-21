@@ -641,6 +641,7 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
+        astro = {},
         jsonls = {
           settings = {
             json = {
