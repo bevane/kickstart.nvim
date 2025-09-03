@@ -239,6 +239,14 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- formats json in buffers, is necessary to format the json output by rest.nvim
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'json',
+  callback = function(ev)
+    vim.bo[ev.buf].formatprg = 'jq'
+  end,
+})
+
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -696,6 +704,7 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         astro = {},
+        jq = {},
         jsonls = {
           settings = {
             json = {
