@@ -645,6 +645,7 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
+        tailwindcss = {},
         astro = {},
         jq = {},
         jsonls = {
