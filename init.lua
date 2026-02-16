@@ -165,6 +165,13 @@ vim.opt.colorcolumn = '80'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- Enable spell check and set toggle for spellcheck
+vim.opt.spell = true
+vim.keymap.set('n', '<leader>ts', function()
+  vim.opt.spell = not vim.o.spell
+  print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
+end, { desc = '[T]oggle [S]pell' })
+
 -- [[Primagen Keymaps]]
 
 -- Move selection - similar to alt-arrow key
@@ -837,6 +844,8 @@ require('lazy').setup({
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+        css = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
