@@ -172,6 +172,15 @@ vim.keymap.set('n', '<leader>ts', function()
   print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
 end, { desc = '[T]oggle [S]pell' })
 
+-- reloads buffer when changes outside neovim are detected
+vim.go.autoread = true
+-- trigger check time when neovim gains focus (after switch back to it)
+-- so that autoread is triggered
+vim.api.nvim_create_autocmd({ 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { '*' },
+})
+
 -- [[Primagen Keymaps]]
 
 -- Move selection - similar to alt-arrow key
