@@ -293,7 +293,7 @@ require('lazy').setup({
   'tpope/vim-fugitive',
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-surround',
-  { 'norcalli/nvim-colorizer.lua', opts = { '*' } },
+  { 'norcalli/nvim-colorizer.lua', opts = { '*', css = { css = true }, astro = { css = true } } },
 
   { 'rest-nvim/rest.nvim' },
   -- NOTE: Plugins can also be added by using a table,
