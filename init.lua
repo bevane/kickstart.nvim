@@ -168,6 +168,11 @@ vim.opt.colorcolumn = '80'
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+-- quickfix
+-- M is meta / alt key
+vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>')
+vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>')
+
 -- Enable spell check and set toggle for spellcheck
 vim.opt.spell = true
 vim.keymap.set('n', '<leader>ts', function()
