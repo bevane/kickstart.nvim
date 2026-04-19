@@ -205,7 +205,9 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 vim.keymap.set('x', '<leader>p', '"_dP')
 
 -- Easier exit to explorer
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set('n', '<leader>pv', ':e %:h<CR>')
+-- Split explorer for oil
+vim.keymap.set('n', '<leader>ps', ':vsplit %:h<CR>')
 -- end Primagen Keymaps
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -310,6 +312,18 @@ require('lazy').setup({
   'sindrets/diffview.nvim',
   'tpope/vim-surround',
   { 'norcalli/nvim-colorizer.lua', opts = { '*', css = { css = true }, astro = { css = true } } },
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = { lsp_file_methods = { autosave_changes = true } },
+    -- Optional dependencies
+    dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
+
   { 'rest-nvim/rest.nvim' },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
