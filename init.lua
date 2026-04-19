@@ -309,7 +309,7 @@ require('lazy').setup({
   { 'wakatime/vim-wakatime', lazy = false }, -- Time tracker
   'sindrets/diffview.nvim',
   'tpope/vim-surround',
-  { 'norcalli/nvim-colorizer.lua', opts = { '*' } },
+  { 'norcalli/nvim-colorizer.lua', opts = { '*', css = { css = true }, astro = { css = true } } },
   { 'rest-nvim/rest.nvim' },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
