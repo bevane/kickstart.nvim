@@ -165,55 +165,15 @@ vim.opt.confirm = true
 -- Indicate 80 character limit
 vim.opt.colorcolumn = '80'
 
+-- B: Enable spell check and set toggle for spellcheck
+-- keymap for toggle is set below
+vim.opt.spell = true
+
+-- B: reloads buffer when changes outside neovim are detected
+vim.go.autoread = true
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
-
--- quickfix
--- M is meta / alt key
-vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>')
-vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>')
-
--- Enable spell check and set toggle for spellcheck
-vim.opt.spell = true
-vim.keymap.set('n', '<leader>ts', function()
-  vim.opt.spell = not vim.o.spell
-  print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
-end, { desc = '[T]oggle [S]pell' })
-
--- reloads buffer when changes outside neovim are detected
-vim.go.autoread = true
--- trigger check time when neovim gains focus (after switch back to it)
--- so that autoread is triggered
-vim.api.nvim_create_autocmd({ 'FocusGained' }, {
-  command = "if mode() != 'c' | checktime | endif",
-  pattern = { '*' },
-})
-
--- [[Primagen Keymaps]]
-
--- Move selection - similar to alt-arrow key
-vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
-
--- retains cursor in original position when joining lines
-vim.keymap.set('n', 'J', 'mzJ`z')
-
--- Center view on half page down and half page up to avoid disorientation
-vim.keymap.set('n', '<C-d>', '<C-d>zz')
-vim.keymap.set('n', '<C-u>', '<C-u>zz')
-
--- Center view when navigating through search terms /search
-vim.keymap.set('n', 'n', 'nzzzv')
-vim.keymap.set('n', 'N', 'Nzzzv')
-
--- paste over a selection without losing the origianl copy buffer
-vim.keymap.set('x', '<leader>p', '"_dP')
-
--- Easier exit to explorer
-vim.keymap.set('n', '<leader>pv', ':e %:h<CR>')
--- Split explorer for oil
-vim.keymap.set('n', '<leader>ps', ':vsplit %:h<CR>')
--- end Primagen Keymaps
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -266,6 +226,45 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+-- B: quickfix
+-- M is meta / alt key
+vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>')
+vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>')
+
+-- B: toggle for spellcheck
+vim.keymap.set('n', '<leader>ts', function()
+  vim.opt.spell = not vim.o.spell
+  print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
+end, { desc = '[T]oggle [S]pell' })
+
+
+--B: Primagen Keymaps
+
+-- Move selection - similar to alt-arrow key
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
+
+-- retains cursor in original position when joining lines
+vim.keymap.set('n', 'J', 'mzJ`z')
+
+-- Center view on half page down and half page up to avoid disorientation
+vim.keymap.set('n', '<C-d>', '<C-d>zz')
+vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
+-- Center view when navigating through search terms /search
+vim.keymap.set('n', 'n', 'nzzzv')
+vim.keymap.set('n', 'N', 'Nzzzv')
+
+-- paste over a selection without losing the origianl copy buffer
+vim.keymap.set('x', '<leader>p', '"_dP')
+
+-- Easier exit to explorer
+vim.keymap.set('n', '<leader>pv', ':e %:h<CR>')
+-- Split explorer for oil
+vim.keymap.set('n', '<leader>ps', ':vsplit %:h<CR>')
+-- end Primagen Keymaps
+
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
@@ -278,13 +277,21 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.hl.on_yank() end,
 })
 
--- formats json in buffers, is necessary to format the json output by rest.nvim
+-- B: formats json in buffers, is necessary to format the json output by rest.nvim
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'json',
   callback = function(ev)
     vim.bo[ev.buf].formatprg = 'jq'
   end,
 })
+
+-- B: trigger check time when neovim gains focus (after switch back to it)
+-- so that autoread is triggered
+vim.api.nvim_create_autocmd({ 'FocusGained' }, {
+  command = "if mode() != 'c' | checktime | endif",
+  pattern = { '*' },
+})
+
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -313,23 +320,6 @@ rtp:prepend(lazypath)
 require('lazy').setup({
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
-  { 'wakatime/vim-wakatime', lazy = false }, -- Time tracker
-  'sindrets/diffview.nvim',
-  'tpope/vim-surround',
-  { 'norcalli/nvim-colorizer.lua', opts = { '*', css = { css = true }, astro = { css = true } } },
-  {
-    'stevearc/oil.nvim',
-    ---@module 'oil'
-    ---@type oil.SetupOpts
-    opts = { lsp_file_methods = { autosave_changes = true } },
-    -- Optional dependencies
-    dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
-    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
-    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
-    lazy = false,
-  },
-
-  { 'rest-nvim/rest.nvim' },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
@@ -558,6 +548,25 @@ require('lazy').setup({
     end,
   },
 
+  -- B: custom plugins
+  { 'wakatime/vim-wakatime', lazy = false }, -- Time tracker
+  'sindrets/diffview.nvim',
+  'tpope/vim-surround',
+  { 'norcalli/nvim-colorizer.lua', opts = { '*', css = { css = true }, astro = { css = true } } },
+  {
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = { lsp_file_methods = { autosave_changes = true } },
+    -- Optional dependencies
+    dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+    -- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+    lazy = false,
+  },
+
+  { 'rest-nvim/rest.nvim' },
+
   -- LSP Plugins
   {
     -- Main LSP Configuration
@@ -680,50 +689,15 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
-        svelte = {},
-        tailwindcss = {},
-        astro = {},
-        jq = {},
-        jsonls = {
-          settings = {
-            json = {
-              format = {
-                enable = true,
-              },
-              validate = { enable = true },
-            },
-          },
-        },
-        gopls = {
-          settings = {
-            gopls = {
-              hints = {
-                assignVariableTypes = true,
-                compositeLiteralFields = true,
-                compositeLiteralTypes = true,
-                constantValues = true,
-                functionTypeParameters = true,
-                parameterNames = true,
-                rangeVariableTypes = true,
-              },
-            },
-          },
-        },
-        basedpyright = {},
-        ruff = {},
-        rust_analyzer = {},
-        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+        -- gopls = {},
+        -- pyright = {},
+        -- rust_analyzer = {},
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        ts_ls = {},
-        eslint = {},
-        prettierd = {},
-        prettier = {},
-        emmet_language_server = {},
-        --
+        -- ts_ls = {},
 
         stylua = {}, -- Used to format Lua code
 
@@ -760,6 +734,45 @@ require('lazy').setup({
             },
           },
         },
+
+	-- B: custom LSPs
+        gopls = {
+          settings = {
+            gopls = {
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+            },
+          },
+        },
+        basedpyright = {},
+        ruff = {},
+        rust_analyzer = {},
+        svelte = {},
+        tailwindcss = {},
+        astro = {},
+        jq = {},
+        jsonls = {
+          settings = {
+            json = {
+              format = {
+                enable = true,
+              },
+              validate = { enable = true },
+            },
+          },
+        },
+        ts_ls = {},
+        eslint = {},
+        prettierd = {},
+        prettier = {},
+        emmet_language_server = {},
       }
 
       -- Ensure the servers and tools above are installed
