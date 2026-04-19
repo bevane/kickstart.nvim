@@ -280,8 +280,13 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
+<<<<<<< HEAD
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
+=======
+  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
+  { 'wakatime/vim-wakatime', lazy = false }, -- Time tracker
+>>>>>>> d5fa64b (add wakatime, jsonls and pretttier for ts)
   'sindrets/diffview.nvim',
   'tpope/vim-surround',
   { 'norcalli/nvim-colorizer.lua', opts = { '*' } },
@@ -636,6 +641,16 @@ require('lazy').setup({
       ---@type table<string, vim.lsp.Config>
       local servers = {
         -- clangd = {},
+        jsonls = {
+          settings = {
+            json = {
+              format = {
+                enable = true,
+              },
+              validate = { enable = true },
+            },
+          },
+        },
         gopls = {
           settings = {
             gopls = {
@@ -763,6 +778,7 @@ require('lazy').setup({
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
