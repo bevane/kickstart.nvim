@@ -288,13 +288,9 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-<<<<<<< HEAD
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
-=======
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   { 'wakatime/vim-wakatime', lazy = false }, -- Time tracker
->>>>>>> d5fa64b (add wakatime, jsonls and pretttier for ts)
   'sindrets/diffview.nvim',
   'tpope/vim-surround',
   { 'norcalli/nvim-colorizer.lua', opts = { '*' } },
@@ -678,7 +674,8 @@ require('lazy').setup({
         },
         basedpyright = {},
         ruff = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
+        -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
