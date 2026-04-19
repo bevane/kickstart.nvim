@@ -280,15 +280,11 @@ rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup({
-<<<<<<< HEAD
   -- NOTE: Plugins can be added via a link or github org/name. To run setup automatically, use `opts = {}`
   { 'NMAC427/guess-indent.nvim', opts = {} },
-=======
-  -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'sindrets/diffview.nvim',
-  'tpope/vim-fugitive',
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   'tpope/vim-surround',
+  { 'norcalli/nvim-colorizer.lua', opts = { '*' } },
   { 'rest-nvim/rest.nvim' },
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -297,7 +293,6 @@ require('lazy').setup({
   -- Use `opts = {}` to automatically pass options to a plugin's `setup()` function, forcing the plugin to be loaded.
   --
 
->>>>>>> 8147988 (chore: fix merge conflict with theme)
   -- Alternatively, use `config = function() ... end` for full control over the configuration.
   -- If you prefer to call `setup` explicitly, use:
   --    {
@@ -704,15 +699,7 @@ require('lazy').setup({
           ---@type lspconfig.settings.lua_ls
           settings = {
             Lua = {
-<<<<<<< HEAD
               format = { enable = false }, -- Disable formatting (formatting is done by stylua)
-=======
-              completion = {
-                callSnippet = 'Replace',
-              },
-              -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              diagnostics = { disable = { 'missing-fields' } },
->>>>>>> 8147988 (chore: fix merge conflict with theme)
             },
           },
         },
