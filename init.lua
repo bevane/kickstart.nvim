@@ -495,6 +495,7 @@ do
 -- B Custom Plugins
 -- ============================================================
   vim.pack.add { gh 'wakatime/vim-wakatime' }
+  vim.pack.add { gh 'sindrets/diffview.nvim' }
   --
 end
 
