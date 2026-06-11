@@ -503,6 +503,10 @@ do
     css = { css = true },
     astro = { css = true }
   }
+  vim.pack.add { gh 'stevearc/oil.nvim' }
+  require('oil').setup {
+    lsp_file_methods = { autosave_changes = true }
+  }
   --
 end
 
