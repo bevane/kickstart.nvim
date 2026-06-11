@@ -237,6 +237,37 @@ do
   -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
   -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+  -- B: quickfix
+  -- M is meta / alt key
+  vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>')
+  vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>')
+
+  -- B: toggle for spellcheck
+  vim.keymap.set('n', '<leader>ts', function()
+    vim.opt.spell = not vim.o.spell
+    print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
+  end, { desc = '[T]oggle [S]pell' })
+
+
+  --B: Primagen Keymaps
+
+  -- Center view on half page down and half page up to avoid disorientation
+  vim.keymap.set('n', '<C-d>', '<C-d>zz')
+  vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
+  -- Center view when navigating through search terms /search
+  vim.keymap.set('n', 'n', 'nzzzv')
+  vim.keymap.set('n', 'N', 'Nzzzv')
+
+  -- paste over a selection without losing the origianl copy buffer
+  vim.keymap.set('x', '<leader>p', '"_dP')
+
+  -- Easier exit to explorer
+  vim.keymap.set('n', '<leader>pv', ':e %:h<CR>')
+  -- Split explorer for oil
+  vim.keymap.set('n', '<leader>ps', ':vsplit %:h<CR>')
+  -- end Primagen Keymaps
+
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
 
@@ -247,6 +278,21 @@ do
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
+  })
+
+  -- B: formats json in buffers, is necessary to format the json output by rest.nvim
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'json',
+    callback = function(ev)
+      vim.bo[ev.buf].formatprg = 'jq'
+    end,
+  })
+
+  -- B: trigger check time when neovim gains focus (after switch back to it)
+  -- so that autoread is triggered
+  vim.api.nvim_create_autocmd({ 'FocusGained' }, {
+    command = "if mode() != 'c' | checktime | endif",
+    pattern = { '*' },
   })
 end
 
