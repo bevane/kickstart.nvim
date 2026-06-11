@@ -496,6 +496,7 @@ do
 -- ============================================================
   vim.pack.add { gh 'wakatime/vim-wakatime' }
   vim.pack.add { gh 'sindrets/diffview.nvim' }
+  vim.pack.add { gh 'tpope/vim-surround' }
   --
 end
 
