@@ -799,6 +799,45 @@ do
         },
       },
     },
+
+    -- B LSPs
+    gopls = {
+      settings = {
+        gopls = {
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+          },
+        },
+      },
+    },
+    basedpyright = {},
+    ruff = {},
+    rust_analyzer = {},
+    svelte = {},
+    tailwindcss = {},
+    astro = {},
+    jq = {},
+    jsonls = {
+      settings = {
+        json = {
+          format = {
+            enable = true,
+          },
+          validate = { enable = true },
+        },
+      },
+    },
+    ts_ls = {},
+    eslint = {},
+    prettierd = {},
+    prettier = {},
+    emmet_language_server = {},
   }
 
   vim.pack.add {
