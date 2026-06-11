@@ -172,6 +172,9 @@ do
   -- See `:help 'confirm'`
   vim.o.confirm = true
 
+  -- Indicate 80 character limit
+  vim.opt.colorcolumn = '80'
+
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
 
