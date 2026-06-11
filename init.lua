@@ -497,6 +497,12 @@ do
   vim.pack.add { gh 'wakatime/vim-wakatime' }
   vim.pack.add { gh 'sindrets/diffview.nvim' }
   vim.pack.add { gh 'tpope/vim-surround' }
+  vim.pack.add { gh 'norcalli/nvim-colorizer.lua' }
+  require('colorizer').setup {
+    '*',
+    css = { css = true },
+    astro = { css = true }
+  }
   --
 end
 
