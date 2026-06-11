@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -110,7 +110,7 @@ do
   vim.o.number = true
   -- You can also add relative line numbers, to help with jumping.
   --  Experiment for yourself to see if you like it!
-  -- vim.o.relativenumber = true
+  vim.o.relativenumber = true
 
   -- Enable mouse mode, can be useful for resizing splits for example!
   vim.o.mouse = 'a'
@@ -171,6 +171,9 @@ do
   -- instead raise a dialog asking if you wish to save the current file(s)
   -- See `:help 'confirm'`
   vim.o.confirm = true
+
+  -- Indicate 80 character limit
+  vim.opt.colorcolumn = '80'
 
   -- [[ Basic Keymaps ]]
   --  See `:help vim.keymap.set()`
@@ -234,6 +237,37 @@ do
   -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
   -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
 
+  -- B: quickfix
+  -- M is meta / alt key
+  vim.keymap.set('n', '<M-j>', '<cmd>cnext<CR>')
+  vim.keymap.set('n', '<M-k>', '<cmd>cprev<CR>')
+
+  -- B: toggle for spellcheck
+  vim.keymap.set('n', '<leader>ts', function()
+    vim.opt.spell = not vim.o.spell
+    print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
+  end, { desc = '[T]oggle [S]pell' })
+
+
+  --B: Primagen Keymaps
+
+  -- Center view on half page down and half page up to avoid disorientation
+  vim.keymap.set('n', '<C-d>', '<C-d>zz')
+  vim.keymap.set('n', '<C-u>', '<C-u>zz')
+
+  -- Center view when navigating through search terms /search
+  vim.keymap.set('n', 'n', 'nzzzv')
+  vim.keymap.set('n', 'N', 'Nzzzv')
+
+  -- paste over a selection without losing the origianl copy buffer
+  vim.keymap.set('x', '<leader>p', '"_dP')
+
+  -- Easier exit to explorer
+  vim.keymap.set('n', '<leader>pv', ':e %:h<CR>')
+  -- Split explorer for oil
+  vim.keymap.set('n', '<leader>ps', ':vsplit %:h<CR>')
+  -- end Primagen Keymaps
+
   -- [[ Basic Autocommands ]]
   --  See `:help lua-guide-autocommands`
 
@@ -244,6 +278,21 @@ do
     desc = 'Highlight when yanking (copying) text',
     group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
     callback = function() vim.hl.on_yank() end,
+  })
+
+  -- B: formats json in buffers, is necessary to format the json output by rest.nvim
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'json',
+    callback = function(ev)
+      vim.bo[ev.buf].formatprg = 'jq'
+    end,
+  })
+
+  -- B: trigger check time when neovim gains focus (after switch back to it)
+  -- so that autoread is triggered
+  vim.api.nvim_create_autocmd({ 'FocusGained' }, {
+    command = "if mode() != 'c' | checktime | endif",
+    pattern = { '*' },
   })
 end
 
@@ -383,9 +432,9 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
+  vim.pack.add { gh 'EdenEast/nightfox.nvim' }
   ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
+  require('nightfox').setup {
     styles = {
       comments = { italic = false }, -- Disable italics in comments
     },
@@ -394,7 +443,7 @@ do
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  vim.cmd.colorscheme 'nightfox'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }
@@ -441,6 +490,24 @@ do
 
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
+
+-- ============================================================
+-- B Custom Plugins
+-- ============================================================
+  vim.pack.add { gh 'wakatime/vim-wakatime' }
+  vim.pack.add { gh 'sindrets/diffview.nvim' }
+  vim.pack.add { gh 'tpope/vim-surround' }
+  vim.pack.add { gh 'norcalli/nvim-colorizer.lua' }
+  require('colorizer').setup {
+    '*',
+    css = { css = true },
+    astro = { css = true }
+  }
+  vim.pack.add { gh 'stevearc/oil.nvim' }
+  require('oil').setup {
+    lsp_file_methods = { autosave_changes = true }
+  }
+  --
 end
 
 -- ============================================================
@@ -732,6 +799,45 @@ do
         },
       },
     },
+
+    -- B LSPs
+    gopls = {
+      settings = {
+        gopls = {
+          hints = {
+            assignVariableTypes = true,
+            compositeLiteralFields = true,
+            compositeLiteralTypes = true,
+            constantValues = true,
+            functionTypeParameters = true,
+            parameterNames = true,
+            rangeVariableTypes = true,
+          },
+        },
+      },
+    },
+    basedpyright = {},
+    ruff = {},
+    rust_analyzer = {},
+    svelte = {},
+    tailwindcss = {},
+    astro = {},
+    jq = {},
+    jsonls = {
+      settings = {
+        json = {
+          format = {
+            enable = true,
+          },
+          validate = { enable = true },
+        },
+      },
+    },
+    ts_ls = {},
+    eslint = {},
+    prettierd = {},
+    prettier = {},
+    emmet_language_server = {},
   }
 
   vim.pack.add {
@@ -777,7 +883,11 @@ do
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
         -- lua = true,
-        -- python = true,
+        python = true,
+        go = true,
+        javascript = true,
+        typescript = true,
+        astro = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -796,6 +906,12 @@ do
       --
       -- You can use 'stop_after_first' to run the first available formatter from the list
       -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      python = { 'isort', 'black' },
+      astro = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
     },
   }
 
