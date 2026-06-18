@@ -680,6 +680,14 @@ do
   vim.pack.add { gh 'j-hui/fidget.nvim' }
   require('fidget').setup {}
 
+  vim.filetype.add({
+    extension = {
+      tmpl = "gotmpl",
+    },
+    pattern = {
+      ["*.tmpl"] = "html",
+    }
+  })
   --  This function gets run when an LSP attaches to a particular buffer.
   --    That is to say, every time a new file is opened that is associated with
   --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -804,6 +812,8 @@ do
     gopls = {
       settings = {
         gopls = {
+          gofumpt = true,
+          templateExtensions = { "gotmpl" },
           hints = {
             assignVariableTypes = true,
             compositeLiteralFields = true,
@@ -837,7 +847,9 @@ do
     eslint = {},
     prettierd = {},
     prettier = {},
-    emmet_language_server = {},
+    emmet_language_server = {
+      filetypes = {"html", "gotmpl"}
+    },
   }
 
   vim.pack.add {
@@ -883,8 +895,8 @@ do
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
         -- lua = true,
-        python = true,
         go = true,
+        python = true,
         javascript = true,
         typescript = true,
         astro = true,
