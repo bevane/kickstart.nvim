@@ -248,7 +248,6 @@ do
     print('Spell checking is', (vim.o.spell and 'enabled' or 'disabled'))
   end, { desc = '[T]oggle [S]pell' })
 
-
   --B: Primagen Keymaps
 
   -- Center view on half page down and half page up to avoid disorientation
@@ -283,9 +282,7 @@ do
   -- B: formats json in buffers, is necessary to format the json output by rest.nvim
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'json',
-    callback = function(ev)
-      vim.bo[ev.buf].formatprg = 'jq'
-    end,
+    callback = function(ev) vim.bo[ev.buf].formatprg = 'jq' end,
   })
 
   -- B: trigger check time when neovim gains focus (after switch back to it)
@@ -491,9 +488,9 @@ do
   -- ... and there is more!
   --  Check out: https://github.com/nvim-mini/mini.nvim
 
--- ============================================================
--- B Custom Plugins
--- ============================================================
+  -- ============================================================
+  -- B Custom Plugins
+  -- ============================================================
   vim.pack.add { gh 'wakatime/vim-wakatime' }
   vim.pack.add { gh 'sindrets/diffview.nvim' }
   vim.pack.add { gh 'tpope/vim-surround' }
@@ -501,11 +498,11 @@ do
   require('colorizer').setup {
     '*',
     css = { css = true },
-    astro = { css = true }
+    astro = { css = true },
   }
   vim.pack.add { gh 'stevearc/oil.nvim' }
   require('oil').setup {
-    lsp_file_methods = { autosave_changes = true }
+    lsp_file_methods = { autosave_changes = true },
   }
   --
 end
@@ -680,14 +677,14 @@ do
   vim.pack.add { gh 'j-hui/fidget.nvim' }
   require('fidget').setup {}
 
-  vim.filetype.add({
+  vim.filetype.add {
     extension = {
-      tmpl = "gotmpl",
+      tmpl = 'gotmpl',
     },
     pattern = {
-      ["*.tmpl"] = "html",
-    }
-  })
+      ['*.tmpl'] = 'html',
+    },
+  }
   --  This function gets run when an LSP attaches to a particular buffer.
   --    That is to say, every time a new file is opened that is associated with
   --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
@@ -813,7 +810,7 @@ do
       settings = {
         gopls = {
           gofumpt = true,
-          templateExtensions = { "gotmpl" },
+          templateExtensions = { 'gotmpl' },
           hints = {
             assignVariableTypes = true,
             compositeLiteralFields = true,
@@ -848,7 +845,7 @@ do
     prettierd = {},
     prettier = {},
     emmet_language_server = {
-      filetypes = {"html", "gotmpl"}
+      filetypes = { 'html', 'gotmpl' },
     },
   }
 
@@ -894,7 +891,7 @@ do
     format_on_save = function(bufnr)
       -- You can specify filetypes to autoformat on save here:
       local enabled_filetypes = {
-        -- lua = true,
+        lua = true,
         go = true,
         python = true,
         javascript = true,
