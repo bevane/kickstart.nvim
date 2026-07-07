@@ -847,6 +847,9 @@ do
     emmet_language_server = {
       filetypes = { 'html', 'gotmpl' },
     },
+    html = {
+      filetypes = { 'html', 'gotmpl' },
+    },
   }
 
   vim.pack.add {
