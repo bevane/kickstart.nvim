@@ -850,6 +850,7 @@ do
     html = {
       filetypes = { 'html', 'gotmpl' },
     },
+    zls = {},
   }
 
   vim.pack.add {
@@ -900,6 +901,7 @@ do
         javascript = true,
         typescript = true,
         astro = true,
+        zig = true,
       }
       if enabled_filetypes[vim.bo[bufnr].filetype] then
         return { timeout_ms = 500 }
@@ -924,6 +926,7 @@ do
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       css = { 'prettierd', 'prettier', stop_after_first = true },
+      zig = { 'zls' },
     },
   }
 
