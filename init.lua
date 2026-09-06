@@ -870,6 +870,7 @@ do
       filetypes = { 'html', 'gotmpl' },
     },
     zls = {},
+    clangd = {},
   }
 
   vim.pack.add {
@@ -921,6 +922,7 @@ do
         typescript = true,
         astro = true,
         zig = true,
+        c = true,
       }
       -- Disable with a global or buffer-local variable
       if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
@@ -949,6 +951,7 @@ do
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       css = { 'prettierd', 'prettier', stop_after_first = true },
       zig = { 'zls' },
+      c = { 'clangd' },
     },
   }
 
