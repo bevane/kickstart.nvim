@@ -101,6 +101,9 @@ do
   -- Set to true if you have a Nerd Font installed and selected in the terminal
   vim.g.have_nerd_font = true
 
+  -- Solves h files being detected as c++
+  vim.g.c_syntax_for_h = true
+
   -- [[ Setting options ]]
   --  See `:help vim.o`
   -- NOTE: You can change these options as you wish!
@@ -951,7 +954,8 @@ do
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       css = { 'prettierd', 'prettier', stop_after_first = true },
       zig = { 'zls' },
-      c = { 'clangd' },
+      -- disabled to avoid large formats on hsm-repo
+      -- c = { 'clangd' },
     },
   }
 
